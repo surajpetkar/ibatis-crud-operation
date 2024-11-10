@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ibatis.crud.dao.ProductMapper">
+	
+	<resultMap type="product" id="result">
+		<id property="productId" column="productId" />
+		<result property="productName" column="productName" />
+		<result property="productPrice" column="productPrice" />
+		<result property="productQuantity" column="productQuantity" />
+		<result property="productImages" column="productImages" />
+	</resultMap>
+	
+	<select id="getAllProduct" resultType="product" resultMap="result">
+		SELECT * FROM product
+	</select>
+	
+	<insert id="insertProduct" parameterType="product" keyProperty="id" useGeneratedKeys="true">
+		INSERT INTO product(productName, productPrice, productQuantity, productImages)
+		VALUES(#{productName}, #{productPrice}, #{productQuantity}, #{productImages})
+	</insert>
+	
+	<update id="updateProduct" parameterType="product">
+		UPDATE product SET productName = #{productName}, productPrice = #{productPrice}, productQuantity = #{productQuantity}, productImages = #{productImages}
+		WHERE productId = #{productId} 
+	</update>
+	
+	<delete id="deleteProduct" parameterType="int">
+		DELETE FROM product WHERE productId = #{productId}
+	</delete>
+	
+	<select id="findById" parameterType="int" resultType="product" resultMap="result">
+		SELECT * FROM product WHERE productId = #{productId}
+	</select>
+</mapper>
